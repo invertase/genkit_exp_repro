@@ -32,11 +32,22 @@ async function editImage() {
       },
     ],
     config: {
-      responseModalities: ["IMAGE"],
+      version: "gemini-2.0-flash-exp-image-generation",
+      responseModalities: ["image", "text"],
     },
   });
 
-  console.log(response.text);
+  const dataUrlResponse = response.message?.content[0].media?.url;
+
+  if (!dataUrlResponse) {
+    throw new Error("No image returned from the AI.");
+  }
+  // Decode the base64 image and save it
+  const base64Data = dataUrlResponse.split(",")[1];
+  const buffer = Buffer.from(base64Data, "base64");
+  const outputPath = path.join(__dirname, "edited_image.png");
+  await fs.writeFile(outputPath, buffer);
+  console.log("Image saved to", outputPath);
 }
 
-editImage().catch(console.error);
+await editImage().catch(console.error);
