@@ -1,0 +1,14 @@
+{
+  "name": "genkit_exp",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@genkit-ai/googleai": "^1.4.0"
+  }
+}
